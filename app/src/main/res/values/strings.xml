@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">PIEA Student</string>
+    <string name="tagline">Punjab Institute of Education Abroad — Student Portal</string>
+
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="dont_have_account">Don\'t have an account? Sign Up</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <string name="dashboard">Dashboard</string>
+    <string name="universities">Universities</string>
+    <string name="scholarships">Scholarships</string>
+    <string name="programs">Programs</string>
+    <string name="admission">Admission</string>
+    <string name="documents">Documents</string>
+    <string name="tracking">Track Application</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="whatsapp_support">WhatsApp Support</string>
+    <string name="office_location">Office Location</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="logout">Logout</string>
+
+    <string name="whatsapp_number">+923000000000</string>
+    <string name="office_lat">31.5204</string>
+    <string name="office_lng">74.3587</string>
+    <string name="office_address">PIEA Head Office, Lahore, Punjab, Pakistan</string>
+</resources>
