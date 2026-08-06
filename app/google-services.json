@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811533492914",
+    "project_id": "piea-studend",
+    "storage_bucket": "piea-studend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811533492914:android:f12d0297bc011c3a75dfab",
+        "android_client_info": {
+          "package_name": "com.piea.student"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBthtwckSZDLYs8d68JCpMsd6WN5vESWbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
