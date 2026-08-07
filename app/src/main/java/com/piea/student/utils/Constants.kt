@@ -29,5 +29,5 @@ object Constants {
         "Statement of Purpose"
     )
 
-    const val WHATSAPP_NUMBER = "923000000000"
+    const val WHATSAPP_NUMBER = "923154697566"
 }
