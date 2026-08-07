@@ -16,22 +16,28 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val LightColors = lightColorScheme(
-    primary = PieaBlue,
+    primary = PieaBrown,
     onPrimary = PieaOnPrimary,
-    secondary = PieaTeal,
+    secondary = PieaGold,
+    onSecondary = PieaTextPrimaryLight,
+    tertiary = PieaGoldLight,
     background = PieaBackgroundLight,
     surface = PieaSurfaceLight,
+    surfaceVariant = PieaCream,
     error = PieaError,
     onBackground = PieaTextPrimaryLight,
     onSurface = PieaTextPrimaryLight
 )
 
 private val DarkColors = darkColorScheme(
-    primary = PieaBlue,
-    onPrimary = PieaOnPrimary,
-    secondary = PieaTeal,
+    primary = PieaGold,
+    onPrimary = PieaTextPrimaryLight,
+    secondary = PieaGoldLight,
+    onSecondary = PieaTextPrimaryLight,
+    tertiary = PieaCream,
     background = PieaBackgroundDark,
     surface = PieaSurfaceDark,
+    surfaceVariant = PieaBrownDark,
     error = PieaError,
     onBackground = PieaTextPrimaryDark,
     onSurface = PieaTextPrimaryDark
