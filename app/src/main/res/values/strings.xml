@@ -28,8 +28,8 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="logout">Logout</string>
 
-    <string name="whatsapp_number">+923000000000</string>
-    <string name="office_lat">31.5204</string>
-    <string name="office_lng">74.3587</string>
-    <string name="office_address">PIEA Head Office, Lahore, Punjab, Pakistan</string>
+    <string name="whatsapp_number">+923154697566</string>
+    <string name="office_lat">31.6314</string>
+    <string name="office_lng">71.0732</string>
+    <string name="office_address">PIEA Bhakkar, Opposite Govt. Post Graduate College, Madni Plaza, Darya Khan Road, Bhakkar</string>
 </resources>
