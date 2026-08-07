@@ -61,12 +61,15 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
             )
         ) {
             composable(Screen.Splash.route) {
-                SplashScreen(isLoggedIn = isLoggedIn) { loggedIn ->
-                    val destination = if (loggedIn) Screen.Dashboard.route else Screen.Login.route
-                    navController.navigate(destination) {
-                        popUpTo(Screen.Splash.route) { inclusive = true }
+                SplashScreen(
+                    isLoggedIn = isLoggedIn,
+                    onFinished = { loggedIn ->
+                        val destination = if (loggedIn) Screen.Dashboard.route else Screen.Login.route
+                        navController.navigate(destination) {
+                            popUpTo(Screen.Splash.route) { inclusive = true }
+                        }
                     }
-                }
+                )
             }
 
             composable(Screen.Login.route) {
