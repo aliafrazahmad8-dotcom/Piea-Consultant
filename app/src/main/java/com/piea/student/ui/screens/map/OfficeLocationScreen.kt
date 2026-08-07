@@ -26,7 +26,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.piea.student.ui.components.PieaTopBar
 
-private val OfficeLatLng = LatLng(31.5204, 74.3587) // Lahore, Punjab — update with the real PIEA office coordinates
+private val OfficeLatLng = LatLng(31.6314, 71.0732) // PIEA Bhakkar office
 
 @Composable
 fun OfficeLocationScreen(onBack: () -> Unit) {
@@ -42,22 +42,22 @@ fun OfficeLocationScreen(onBack: () -> Unit) {
             ) {
                 Marker(
                     state = MarkerState(position = OfficeLatLng),
-                    title = "PIEA Head Office",
-                    snippet = "Lahore, Punjab, Pakistan"
+                    title = "PIEA Bhakkar",
+                    snippet = "Opposite Govt. Post Graduate College, Madni Plaza, Darya Khan Road, Bhakkar"
                 )
             }
             Column(Modifier.padding(16.dp)) {
                 androidx.compose.foundation.layout.Row {
                     Icon(Icons.Default.LocationOn, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     Text(
-                        "PIEA Head Office",
+                        "PIEA Bhakkar",
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                 }
                 Text(
-                    "Lahore, Punjab, Pakistan",
+                    "Opposite Govt. Post Graduate College, Madni Plaza, Darya Khan Road, Bhakkar",
                     fontSize = 13.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp, start = 32.dp)
