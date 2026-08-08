@@ -15,6 +15,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.piea.student.ui.components.PieaBottomBar
 import com.piea.student.ui.screens.admin.AdminAddProgramScreen
+import com.piea.student.ui.screens.admin.AdminAddScholarshipScreen
+import com.piea.student.ui.screens.admin.AdminAddUniversityScreen
+import com.piea.student.ui.screens.admin.AdminPanelScreen
 import com.piea.student.ui.screens.admission.AdmissionFormScreen
 import com.piea.student.ui.screens.auth.LoginScreen
 import com.piea.student.ui.screens.auth.SignupScreen
@@ -174,7 +177,7 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
             composable(Screen.Profile.route) {
                 ProfileScreen(
                     onOpenSettings = { navController.navigate(Screen.Settings.route) },
-                    onOpenAdmin = { navController.navigate(Screen.AdminAddProgram.route) },
+                    onOpenAdmin = { navController.navigate(Screen.AdminPanel.route) },
                     onLoggedOut = {
                         navController.navigate(Screen.Login.route) {
                             popUpTo(0) { inclusive = true }
@@ -187,8 +190,25 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
                 SettingsScreen(onBack = { navController.popBackStack() })
             }
 
+            composable(Screen.AdminPanel.route) {
+                AdminPanelScreen(
+                    onBack = { navController.popBackStack() },
+                    onAddUniversity = { navController.navigate(Screen.AdminAddUniversity.route) },
+                    onAddScholarship = { navController.navigate(Screen.AdminAddScholarship.route) },
+                    onAddProgram = { navController.navigate(Screen.AdminAddProgram.route) }
+                )
+            }
+
             composable(Screen.AdminAddProgram.route) {
                 AdminAddProgramScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.AdminAddUniversity.route) {
+                AdminAddUniversityScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.AdminAddScholarship.route) {
+                AdminAddScholarshipScreen(onBack = { navController.popBackStack() })
             }
         }
     }
