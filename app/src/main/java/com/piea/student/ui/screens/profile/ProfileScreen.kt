@@ -127,7 +127,7 @@ fun ProfileScreen(
                     if (isAdmin) {
                         Spacer(Modifier.height(12.dp))
                         Card(shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp)) {
-                            SettingsRow(icon = Icons.Default.AdminPanelSettings, label = "Admin — Add Program", onClick = onOpenAdmin)
+                            SettingsRow(icon = Icons.Default.AdminPanelSettings, label = "Admin Panel", onClick = onOpenAdmin)
                         }
                     }
 
