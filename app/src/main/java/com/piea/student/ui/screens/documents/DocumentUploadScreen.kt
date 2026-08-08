@@ -115,7 +115,7 @@ fun DocumentUploadScreen(
                                 pickerLauncher.launch("*/*")
                             },
                         shape = RoundedCornerShape(14.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth().padding(14.dp),

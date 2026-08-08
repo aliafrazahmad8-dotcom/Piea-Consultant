@@ -74,7 +74,7 @@ private fun NotificationRow(item: NotificationItem, onClick: () -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = if (item.read) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.primary.copy(alpha = 0.07f)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
         Row(modifier = Modifier.fillMaxWidth().padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(

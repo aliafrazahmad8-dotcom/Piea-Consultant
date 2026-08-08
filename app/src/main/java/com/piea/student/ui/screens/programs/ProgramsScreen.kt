@@ -63,7 +63,7 @@ private fun ProgramCard(item: Program) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ) {
         Column(Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween) {

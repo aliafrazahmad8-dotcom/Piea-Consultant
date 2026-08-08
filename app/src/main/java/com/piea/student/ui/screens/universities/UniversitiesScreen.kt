@@ -78,7 +78,7 @@ private fun UniversityCard(university: University, onClick: () -> Unit) {
             .padding(bottom = 12.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ) {
         Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(

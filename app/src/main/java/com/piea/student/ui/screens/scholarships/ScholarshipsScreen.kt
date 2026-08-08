@@ -61,7 +61,7 @@ private fun ScholarshipCard(item: Scholarship) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(item.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
