@@ -21,4 +21,14 @@ class ScholarshipRepository @Inject constructor(
             Resource.Error(e.localizedMessage ?: "Could not load scholarships.")
         }
     }
+
+    suspend fun addScholarship(scholarship: Scholarship): Resource<Unit> {
+        return try {
+            val docRef = firestore.collection(Constants.COLLECTION_SCHOLARSHIPS).document()
+            docRef.set(scholarship.copy(id = docRef.id)).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.localizedMessage ?: "Could not add scholarship.")
+        }
+    }
 }
