@@ -7,6 +7,8 @@ object Constants {
     const val COLLECTION_PROGRAMS = "programs"
     const val COLLECTION_APPLICATIONS = "applications"
     const val COLLECTION_NOTIFICATIONS = "notifications"
+    const val COLLECTION_APP_CONFIG = "app_config"
+    const val APP_VERSION_DOC_ID = "version"
 
     const val STORAGE_DOCUMENTS = "student_documents"
     const val STORAGE_PROFILE_PHOTOS = "profile_photos"
@@ -41,5 +43,5 @@ object Constants {
 
     // Only this account (matched by login email) sees the in-app Admin panel.
     // Change this to your own PIEA Student login email.
-    const val ADMIN_EMAIL = "ALIAFRAZAHMAD8@GMAIL.COM"
+    const val ADMIN_EMAIL = "aliafrazahmad8@gmail.com"
 }

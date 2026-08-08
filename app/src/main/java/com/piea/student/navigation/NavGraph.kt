@@ -18,6 +18,7 @@ import com.piea.student.ui.screens.admin.AdminAddProgramScreen
 import com.piea.student.ui.screens.admin.AdminAddScholarshipScreen
 import com.piea.student.ui.screens.admin.AdminAddUniversityScreen
 import com.piea.student.ui.screens.admin.AdminPanelScreen
+import com.piea.student.ui.screens.admin.AdminPublishUpdateScreen
 import com.piea.student.ui.screens.admission.AdmissionFormScreen
 import com.piea.student.ui.screens.auth.LoginScreen
 import com.piea.student.ui.screens.auth.SignupScreen
@@ -195,7 +196,8 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
                     onBack = { navController.popBackStack() },
                     onAddUniversity = { navController.navigate(Screen.AdminAddUniversity.route) },
                     onAddScholarship = { navController.navigate(Screen.AdminAddScholarship.route) },
-                    onAddProgram = { navController.navigate(Screen.AdminAddProgram.route) }
+                    onAddProgram = { navController.navigate(Screen.AdminAddProgram.route) },
+                    onPublishUpdate = { navController.navigate(Screen.AdminPublishUpdate.route) }
                 )
             }
 
@@ -209,6 +211,10 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
 
             composable(Screen.AdminAddScholarship.route) {
                 AdminAddScholarshipScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.AdminPublishUpdate.route) {
+                AdminPublishUpdateScreen(onBack = { navController.popBackStack() })
             }
         }
     }
