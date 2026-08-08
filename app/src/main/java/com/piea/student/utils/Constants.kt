@@ -41,5 +41,5 @@ object Constants {
 
     // Only this account (matched by login email) sees the in-app Admin panel.
     // Change this to your own PIEA Student login email.
-    const val ADMIN_EMAIL = "admin@piea.edu.pk"
+    const val ADMIN_EMAIL = "ALIAFRAZAHMAD8@GMAIL.COM"
 }
