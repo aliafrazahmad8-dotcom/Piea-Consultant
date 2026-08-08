@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.piea.student.ui.components.PieaBottomBar
+import com.piea.student.ui.screens.admin.AdminAddProgramScreen
 import com.piea.student.ui.screens.admission.AdmissionFormScreen
 import com.piea.student.ui.screens.auth.LoginScreen
 import com.piea.student.ui.screens.auth.SignupScreen
@@ -21,6 +22,7 @@ import com.piea.student.ui.screens.dashboard.DashboardScreen
 import com.piea.student.ui.screens.documents.DocumentUploadScreen
 import com.piea.student.ui.screens.map.OfficeLocationScreen
 import com.piea.student.ui.screens.notifications.NotificationsScreen
+import com.piea.student.ui.screens.payment.FeePaymentScreen
 import com.piea.student.ui.screens.programs.ProgramsScreen
 import com.piea.student.ui.screens.profile.ProfileScreen
 import com.piea.student.ui.screens.scholarships.ScholarshipsScreen
@@ -124,7 +126,28 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
             composable(Screen.AdmissionForm.route) {
                 AdmissionFormScreen(
                     onBack = { navController.popBackStack() },
-                    onSubmitted = { navController.navigate(Screen.ApplicationTracking.route) }
+                    onSubmitted = { applicationId, fee ->
+                        navController.navigate(Screen.FeePayment.createRoute(applicationId, fee)) {
+                            popUpTo(Screen.AdmissionForm.route) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable(
+                route = Screen.FeePayment.route,
+                arguments = listOf(navArgument("applicationId") { }, navArgument("feeAmount") { })
+            ) { backStackEntry ->
+                val applicationId = backStackEntry.arguments?.getString("applicationId") ?: ""
+                val feeAmount = backStackEntry.arguments?.getString("feeAmount") ?: "0"
+                FeePaymentScreen(
+                    applicationId = applicationId,
+                    feeAmount = feeAmount,
+                    onDone = {
+                        navController.navigate(Screen.ApplicationTracking.route) {
+                            popUpTo(Screen.Dashboard.route)
+                        }
+                    }
                 )
             }
 
@@ -151,6 +174,7 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
             composable(Screen.Profile.route) {
                 ProfileScreen(
                     onOpenSettings = { navController.navigate(Screen.Settings.route) },
+                    onOpenAdmin = { navController.navigate(Screen.AdminAddProgram.route) },
                     onLoggedOut = {
                         navController.navigate(Screen.Login.route) {
                             popUpTo(0) { inclusive = true }
@@ -161,6 +185,10 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
 
             composable(Screen.Settings.route) {
                 SettingsScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.AdminAddProgram.route) {
+                AdminAddProgramScreen(onBack = { navController.popBackStack() })
             }
         }
     }

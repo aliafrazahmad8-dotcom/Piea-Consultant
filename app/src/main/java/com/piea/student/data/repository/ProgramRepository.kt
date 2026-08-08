@@ -21,4 +21,14 @@ class ProgramRepository @Inject constructor(
             Resource.Error(e.localizedMessage ?: "Could not load programs.")
         }
     }
+
+    suspend fun addProgram(program: Program): Resource<Unit> {
+        return try {
+            val docRef = firestore.collection(Constants.COLLECTION_PROGRAMS).document()
+            docRef.set(program.copy(id = docRef.id)).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.localizedMessage ?: "Could not add program.")
+        }
+    }
 }

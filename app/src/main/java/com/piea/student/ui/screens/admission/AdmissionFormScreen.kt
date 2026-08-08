@@ -9,9 +9,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExposedDropdownMenu
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -32,15 +38,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.piea.student.data.model.Application
+import com.piea.student.data.model.Program
 import com.piea.student.ui.components.PieaTopBar
 import com.piea.student.utils.Resource
 import kotlinx.coroutines.launch
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun AdmissionFormScreen(
     viewModel: AdmissionViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    onSubmitted: () -> Unit
+    onSubmitted: (applicationId: String, fee: String) -> Unit
 ) {
     var fullName by remember { mutableStateOf("") }
     var fatherName by remember { mutableStateOf("") }
@@ -54,7 +62,10 @@ fun AdmissionFormScreen(
     var marks by remember { mutableStateOf("") }
     var country by remember { mutableStateOf("") }
     var university by remember { mutableStateOf("") }
-    var program by remember { mutableStateOf("") }
+
+    val programs by viewModel.programs.collectAsState()
+    var selectedProgram by remember { mutableStateOf<Program?>(null) }
+    var programDropdownExpanded by remember { mutableStateOf(false) }
 
     val submitState by viewModel.submitState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -62,8 +73,14 @@ fun AdmissionFormScreen(
 
     LaunchedEffect(submitState) {
         when (val state = submitState) {
-            is Resource.Success -> { onSubmitted(); viewModel.resetState() }
-            is Resource.Error -> { scope.launch { snackbarHostState.showSnackbar(state.message) }; viewModel.resetState() }
+            is Resource.Success -> {
+                onSubmitted(state.data, selectedProgram?.applicationFee ?: "")
+                viewModel.resetState()
+            }
+            is Resource.Error -> {
+                scope.launch { snackbarHostState.showSnackbar(state.message) }
+                viewModel.resetState()
+            }
             else -> Unit
         }
     }
@@ -98,9 +115,58 @@ fun AdmissionFormScreen(
             SectionLabel("Study Preference")
             FormField("Preferred Country *", country) { country = it }
             FormField("Preferred University", university) { university = it }
-            FormField("Preferred Program *", program) { program = it }
 
-            Spacer(Modifier.height(24.dp))
+            Text(
+                "Preferred Program *",
+                fontSize = 13.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            ExposedDropdownMenuBox(
+                expanded = programDropdownExpanded,
+                onExpandedChange = { programDropdownExpanded = it }
+            ) {
+                OutlinedTextField(
+                    value = selectedProgram?.let { "${it.title} (${it.universityName})" } ?: "",
+                    onValueChange = {},
+                    readOnly = true,
+                    placeholder = { Text("Select a program") },
+                    trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth()
+                        .padding(bottom = 4.dp)
+                )
+                ExposedDropdownMenu(
+                    expanded = programDropdownExpanded,
+                    onDismissRequest = { programDropdownExpanded = false }
+                ) {
+                    if (programs.isEmpty()) {
+                        DropdownMenuItem(text = { Text("No programs available yet") }, onClick = {})
+                    }
+                    programs.forEach { program ->
+                        DropdownMenuItem(
+                            text = { Text("${program.title} — ${program.universityName}") },
+                            onClick = {
+                                selectedProgram = program
+                                programDropdownExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+            if (selectedProgram != null && selectedProgram!!.applicationFee.isNotBlank()) {
+                Text(
+                    "Application processing fee: Rs. ${selectedProgram!!.applicationFee}",
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 4.dp, bottom = 12.dp)
+                )
+            } else {
+                Spacer(Modifier.height(12.dp))
+            }
+
+            Spacer(Modifier.height(12.dp))
             Button(
                 onClick = {
                     viewModel.submit(
@@ -109,7 +175,10 @@ fun AdmissionFormScreen(
                             dateOfBirth = dob, email = email, phoneNumber = phone, address = address,
                             lastQualification = lastQualification, lastInstitution = lastInstitution,
                             marksOrGpa = marks, preferredCountry = country,
-                            preferredUniversity = university, preferredProgram = program
+                            preferredUniversity = university,
+                            preferredProgram = selectedProgram?.title ?: "",
+                            programId = selectedProgram?.id ?: "",
+                            applicationFee = selectedProgram?.applicationFee ?: ""
                         )
                     )
                 },

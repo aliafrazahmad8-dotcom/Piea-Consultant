@@ -8,5 +8,6 @@ data class Program(
     val duration: String = "",
     val tuitionFee: String = "",
     val intake: String = "",
-    val description: String = ""
+    val description: String = "",
+    val applicationFee: String = "" // processing/admission fee charged in the app, e.g. "5000"
 )

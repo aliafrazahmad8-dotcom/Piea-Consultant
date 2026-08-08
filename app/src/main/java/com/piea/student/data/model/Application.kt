@@ -16,6 +16,10 @@ data class Application(
     val preferredCountry: String = "",
     val preferredUniversity: String = "",
     val preferredProgram: String = "",
+    val programId: String = "",
+    val applicationFee: String = "",
+    val feePaid: Boolean = false,
+    val feeReceiptUrl: String = "",
     val status: String = "Submitted",
     val submittedAt: Long = System.currentTimeMillis(),
     val remarks: String = ""

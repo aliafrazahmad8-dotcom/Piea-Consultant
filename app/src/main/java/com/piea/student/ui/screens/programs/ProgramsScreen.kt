@@ -90,6 +90,14 @@ private fun ProgramCard(item: Program) {
             if (item.tuitionFee.isNotBlank()) {
                 Text("Tuition: ${item.tuitionFee}", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp))
             }
+            if (item.applicationFee.isNotBlank()) {
+                Text(
+                    "Application Fee: Rs. ${item.applicationFee}",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+            }
         }
     }
 }

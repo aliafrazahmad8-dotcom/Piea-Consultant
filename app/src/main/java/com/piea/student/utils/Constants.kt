@@ -15,6 +15,7 @@ object Constants {
     const val KEY_DARK_MODE = "dark_mode_enabled"
 
     const val STATUS_SUBMITTED = "Submitted"
+    const val STATUS_FEE_PENDING = "Fee Payment Pending"
     const val STATUS_UNDER_REVIEW = "Under Review"
     const val STATUS_DOCUMENTS_PENDING = "Documents Pending"
     const val STATUS_APPROVED = "Approved"
@@ -30,4 +31,15 @@ object Constants {
     )
 
     const val WHATSAPP_NUMBER = "923154697566"
+
+    // Fee payment details (manual transfer until a real payment gateway
+    // merchant account with JazzCash/EasyPaisa is approved and integrated)
+    const val JAZZCASH_NUMBER = "0309-0717979"
+    const val BANK_NAME = "Meezan Bank"
+    const val BANK_ACCOUNT_TITLE = "Ali Afraz Ahmad"
+    const val BANK_ACCOUNT_NUMBER = "00300113304816"
+
+    // Only this account (matched by login email) sees the in-app Admin panel.
+    // Change this to your own PIEA Student login email.
+    const val ADMIN_EMAIL = "admin@piea.edu.pk"
 }

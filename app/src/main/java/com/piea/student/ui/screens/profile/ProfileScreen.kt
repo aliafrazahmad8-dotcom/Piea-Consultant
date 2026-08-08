@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AdminPanelSettings
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Person
@@ -44,20 +45,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.piea.student.ui.components.ErrorView
 import com.piea.student.ui.components.LoadingView
 import com.piea.student.ui.components.PieaTopBar
+import com.piea.student.utils.Constants
 import com.piea.student.utils.Resource
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     onOpenSettings: () -> Unit,
+    onOpenAdmin: () -> Unit,
     onLoggedOut: () -> Unit
 ) {
     val profileState by viewModel.profileState.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
     var editMode by remember { mutableStateOf(false) }
+    val currentEmail = FirebaseAuth.getInstance().currentUser?.email
+    val isAdmin = currentEmail != null && currentEmail.equals(Constants.ADMIN_EMAIL, ignoreCase = true)
 
     Scaffold(topBar = { PieaTopBar("My Profile") }) { padding ->
         when (val state = profileState) {
@@ -116,6 +122,13 @@ fun ProfileScreen(
 
                     Card(shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp)) {
                         SettingsRow(icon = Icons.Default.Settings, label = "App Settings", onClick = onOpenSettings)
+                    }
+
+                    if (isAdmin) {
+                        Spacer(Modifier.height(12.dp))
+                        Card(shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp)) {
+                            SettingsRow(icon = Icons.Default.AdminPanelSettings, label = "Admin — Add Program", onClick = onOpenAdmin)
+                        }
                     }
 
                     Spacer(Modifier.height(12.dp))
