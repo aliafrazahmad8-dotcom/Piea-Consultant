@@ -32,4 +32,14 @@ class UniversityRepository @Inject constructor(
             Resource.Error(e.localizedMessage ?: "Could not load university.")
         }
     }
+
+    suspend fun addUniversity(university: University): Resource<Unit> {
+        return try {
+            val docRef = firestore.collection(Constants.COLLECTION_UNIVERSITIES).document()
+            docRef.set(university.copy(id = docRef.id)).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.localizedMessage ?: "Could not add university.")
+        }
+    }
 }
