@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.CardMembership
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -32,7 +33,8 @@ fun AdminPanelScreen(
     onBack: () -> Unit,
     onAddUniversity: () -> Unit,
     onAddScholarship: () -> Unit,
-    onAddProgram: () -> Unit
+    onAddProgram: () -> Unit,
+    onPublishUpdate: () -> Unit
 ) {
     Scaffold(topBar = { PieaTopBar("Admin Panel", onBack) }) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp)) {
@@ -45,6 +47,7 @@ fun AdminPanelScreen(
             AdminRow(Icons.Default.School, "Add University", onAddUniversity)
             AdminRow(Icons.Default.CardMembership, "Add Scholarship", onAddScholarship)
             AdminRow(Icons.Default.MenuBook, "Add Program (with Fee)", onAddProgram)
+            AdminRow(Icons.Default.SystemUpdate, "Publish App Update", onPublishUpdate)
         }
     }
 }

@@ -63,6 +63,31 @@ fun DashboardScreen(
     onActionClick: (String) -> Unit
 ) {
     val user by viewModel.user.collectAsState()
+    val availableUpdate by viewModel.availableUpdate.collectAsState()
+    val context = androidx.compose.ui.platform.LocalContext.current
+
+    availableUpdate?.let { update ->
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { viewModel.dismissUpdateDialog() },
+            title = { Text("Update Available") },
+            text = {
+                Text(
+                    "A new version (${update.latestVersionName}) of PIEA Student is available." +
+                        if (update.releaseNotes.isNotBlank()) "\n\n${update.releaseNotes}" else ""
+                )
+            },
+            confirmButton = {
+                androidx.compose.material3.TextButton(onClick = {
+                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(update.downloadUrl))
+                    context.startActivity(intent)
+                    viewModel.dismissUpdateDialog()
+                }) { Text("Update Now") }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { viewModel.dismissUpdateDialog() }) { Text("Later") }
+            }
+        )
+    }
 
     Scaffold { padding ->
         Column(modifier = Modifier
