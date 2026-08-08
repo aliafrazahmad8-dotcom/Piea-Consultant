@@ -1,6 +1,7 @@
 package com.piea.student.ui.screens.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -168,8 +169,8 @@ private fun SettingsRow(icon: androidx.compose.ui.graphics.vector.ImageVector, l
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
-            .then(Modifier),
+            .clickable { onClick() }
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
