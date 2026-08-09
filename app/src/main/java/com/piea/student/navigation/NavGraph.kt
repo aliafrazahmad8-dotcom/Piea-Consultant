@@ -92,14 +92,13 @@ fun PieaNavGraph(isLoggedIn: Boolean) {
             composable(Screen.Signup.route) {
                 SignupScreen(
                     onSignupSuccess = {
-                        navController.navigate(Screen.Dashboard.route) {
-                            popUpTo(Screen.Login.route) { inclusive = true }
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Signup.route) { inclusive = true }
                         }
                     },
                     onNavigateToLogin = { navController.popBackStack() }
                 )
             }
-
             composable(Screen.Dashboard.route) {
                 DashboardScreen(onActionClick = { route -> navController.navigate(route) })
             }
