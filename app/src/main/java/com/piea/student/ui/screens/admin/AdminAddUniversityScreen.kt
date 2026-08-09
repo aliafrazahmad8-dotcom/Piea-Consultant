@@ -45,6 +45,7 @@ fun AdminAddUniversityScreen(
     var tuitionRange by remember { mutableStateOf("") }
     var website by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    var categories by remember { mutableStateOf("") }
 
     val addState by viewModel.addState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -55,7 +56,7 @@ fun AdminAddUniversityScreen(
             is Resource.Success -> {
                 scope.launch { snackbarHostState.showSnackbar("University added successfully!") }
                 name = ""; country = ""; city = ""; ranking = ""
-                tuitionRange = ""; website = ""; description = ""
+                tuitionRange = ""; website = ""; description = ""; categories = ""
                 viewModel.resetState()
             }
             is Resource.Error -> {
@@ -87,6 +88,7 @@ fun AdminAddUniversityScreen(
             Field("University Name *", name) { name = it }
             Field("Country *", country) { country = it }
             Field("City", city) { city = it }
+            Field("Categories (comma separated, e.g. MBBS, Bachelor, Master)", categories) { categories = it }
             Field("Ranking (e.g. Top 100 Global)", ranking) { ranking = it }
             Field("Tuition Range (e.g. \$10,000 - \$20,000/yr)", tuitionRange) { tuitionRange = it }
             Field("Website", website) { website = it }
@@ -99,7 +101,8 @@ fun AdminAddUniversityScreen(
                         University(
                             name = name, country = country, city = city,
                             ranking = ranking, tuitionRange = tuitionRange,
-                            website = website, description = description
+                            website = website, description = description,
+                            categories = categories
                         )
                     )
                 },
