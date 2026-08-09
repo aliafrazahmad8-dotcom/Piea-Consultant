@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -157,7 +158,7 @@ fun DashboardScreen(
                                 .clip(CircleShape)
                                 .background(Color.White.copy(alpha = 0.06f))
                                 .align(Alignment.TopEnd)
-                                .padding(top = (-40).dp, end = (-30).dp)
+                                .offset(x = 30.dp, y = (-40).dp)
                         )
                         Column(modifier = Modifier.padding(22.dp)) {
                             Text(
