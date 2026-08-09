@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,6 +49,8 @@ import com.piea.student.ui.components.PieaTopBar
 import com.piea.student.ui.theme.PieaGradients
 import com.piea.student.utils.Resource
 
+private val filterCategories = listOf("All", "MBBS", "Bachelor", "Master", "PhD", "Diploma")
+
 @Composable
 fun UniversitiesScreen(
     viewModel: UniversitiesViewModel = hiltViewModel(),
@@ -52,29 +58,68 @@ fun UniversitiesScreen(
     onUniversityClick: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
+    var selectedCategory by remember { mutableStateOf("All") }
 
     Scaffold(topBar = { PieaTopBar("Universities", onBack) }) { padding ->
         when (val s = state) {
             is Resource.Loading -> LoadingView(Modifier.padding(padding))
             is Resource.Error -> ErrorView(s.message, Modifier.padding(padding))
             is Resource.Success -> {
-                if (s.data.isEmpty()) {
-                    EmptyView("No universities available yet.", Modifier.padding(padding))
+                val filtered = if (selectedCategory == "All") {
+                    s.data
                 } else {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
-                        contentPadding = PaddingValues(16.dp)
+                    s.data.filter { uni ->
+                        uni.categories.split(",").any { it.trim().equals(selectedCategory, ignoreCase = true) }
+                    }
+                }
+
+                Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(s.data) { uni ->
-                            UniversityCard(uni) { onUniversityClick(uni.id) }
+                        items(filterCategories) { category ->
+                            CategoryChip(
+                                label = category,
+                                selected = category == selectedCategory,
+                                onClick = { selectedCategory = category }
+                            )
+                        }
+                    }
+
+                    if (filtered.isEmpty()) {
+                        EmptyView("No universities found for \"$selectedCategory\".")
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
+                        ) {
+                            items(filtered) { uni ->
+                                UniversityCard(uni) { onUniversityClick(uni.id) }
+                            }
                         }
                     }
                 }
             }
             else -> Unit
         }
+    }
+}
+
+@Composable
+private fun CategoryChip(label: String, selected: Boolean, onClick: () -> Unit) {
+    Surface(
+        color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier.clickable { onClick() }
+    ) {
+        Text(
+            label,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Medium,
+            color = if (selected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
     }
 }
 
