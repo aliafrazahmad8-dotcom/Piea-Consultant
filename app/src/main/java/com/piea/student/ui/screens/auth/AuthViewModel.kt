@@ -53,7 +53,11 @@ class AuthViewModel @Inject constructor(
         }
         viewModelScope.launch {
             _signupState.value = Resource.Loading
-            _signupState.value = authRepository.signup(fullName.trim(), email.trim(), password, phone.trim())
+            val result = authRepository.signup(fullName.trim(), email.trim(), password, phone.trim())
+            if (result is Resource.Success) {
+                authRepository.logout()
+            }
+            _signupState.value = result
         }
     }
 
