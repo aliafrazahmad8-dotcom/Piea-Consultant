@@ -9,5 +9,6 @@ data class University(
     val ranking: String = "",
     val description: String = "",
     val tuitionRange: String = "",
-    val website: String = ""
+    val website: String = "",
+    val categories: String = "" // comma-separated, e.g. "MBBS, Bachelor, Master"
 )
