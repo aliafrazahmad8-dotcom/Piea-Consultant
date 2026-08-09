@@ -179,7 +179,7 @@ fun SignupScreen(
                         if (signupState is Resource.Loading) {
                             CircularProgressIndicator(modifier = Modifier.height(22.dp), color = MaterialTheme.colorScheme.onPrimary)
                         } else {
-                            Text("Sign Up", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                            Text("CREATE ACCOUNT", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                         }
                     }
                 }
