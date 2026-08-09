@@ -1,8 +1,8 @@
 <resources>
-    <color name="piea_primary">#6B4226</color>
-    <color name="piea_primary_dark">#4A2D18</color>
+    <color name="piea_primary">#00563F</color>
+    <color name="piea_primary_dark">#003D2B</color>
     <color name="piea_secondary">#C9A227</color>
-    <color name="piea_background">#FBF6EA</color>
+    <color name="piea_background">#F5FAF7</color>
     <color name="piea_surface">#FFFFFF</color>
     <color name="piea_error">#B3261E</color>
 </resources>
