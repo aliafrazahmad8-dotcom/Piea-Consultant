@@ -17,7 +17,7 @@ object PieaGradients {
     )
 
     val SplashBackground = Brush.verticalGradient(
-        colors = listOf(PieaBrownDark, PieaBrown, Color(0xFF7A4F2E))
+        colors = listOf(PieaBrownDark, PieaBrown, Color(0xFF0A7A57))
     )
 
     val AuthHeader = Brush.linearGradient(
