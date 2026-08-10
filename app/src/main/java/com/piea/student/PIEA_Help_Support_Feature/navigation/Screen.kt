@@ -1,0 +1,37 @@
+package com.piea.student.navigation
+
+sealed class Screen(val route: String) {
+    data object Splash : Screen("splash")
+    data object Login : Screen("login")
+    data object Signup : Screen("signup")
+
+    data object Dashboard : Screen("dashboard")
+    data object Universities : Screen("universities")
+    data object UniversityDetail : Screen("university_detail/{universityId}") {
+        fun createRoute(universityId: String) = "university_detail/$universityId"
+    }
+    data object Scholarships : Screen("scholarships")
+    data object Programs : Screen("programs")
+    data object AdmissionForm : Screen("admission_form")
+    data object FeePayment : Screen("fee_payment/{applicationId}/{feeAmount}") {
+        fun createRoute(applicationId: String, feeAmount: String) =
+            "fee_payment/$applicationId/${feeAmount.ifBlank { "0" }}"
+    }
+    data object DocumentUpload : Screen("document_upload")
+    data object ApplicationTracking : Screen("application_tracking")
+    data object Notifications : Screen("notifications")
+    data object WhatsAppSupport : Screen("whatsapp_support")
+    data object HelpSupport : Screen("help_support")
+    data object FAQ : Screen("faq")
+    data object Feedback : Screen("support_feedback")
+    data object Complaint : Screen("support_complaint")
+    data object SocialMedia : Screen("social_media")
+    data object OfficeLocation : Screen("office_location")
+    data object Profile : Screen("profile")
+    data object Settings : Screen("settings")
+    data object AdminAddProgram : Screen("admin_add_program")
+    data object AdminPanel : Screen("admin_panel")
+    data object AdminAddUniversity : Screen("admin_add_university")
+    data object AdminAddScholarship : Screen("admin_add_scholarship")
+    data object AdminPublishUpdate : Screen("admin_publish_update")
+}
