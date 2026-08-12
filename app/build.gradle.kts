@@ -96,7 +96,9 @@ dependencies {
     // Google Maps
     implementation("com.google.maps.android:maps-compose:4.4.1")
     implementation("com.google.android.gms:play-services-maps:19.0.0")
-    implementation("com.google.android.gms:play-services-location:21.3.0")
+   // Biometric authentication (fingerprint / face unlock)
+    implementation("androidx.biometric:biometric:1.1.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.2")
 
     // Accompanist (permissions, system UI)
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")
