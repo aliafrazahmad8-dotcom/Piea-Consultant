@@ -55,17 +55,18 @@ fun SplashScreen(onFinished: (Boolean) -> Unit, isLoggedIn: Boolean) {
             )
         }
         Text(
-            "PIEA Student",
+            "PIEA",
             color = Color.White,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 20.dp, bottom = 6.dp)
         )
         Text(
-            "Punjab Institute of Education Abroad",
+            "PAK INTERNATIONAL EDUCATIONAL ADVISOR",
             color = Color.White.copy(alpha = 0.8f),
             fontSize = 13.sp,
-            modifier = Modifier.padding(bottom = 28.dp)
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            modifier = Modifier.padding(bottom = 28.dp, start = 24.dp, end = 24.dp)
         )
         CircularProgressIndicator(color = Color.White, modifier = Modifier.height(28.dp))
     }
