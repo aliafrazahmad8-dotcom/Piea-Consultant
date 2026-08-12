@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Visibility
@@ -24,12 +26,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -47,14 +50,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.piea.student.ui.theme.PieaGradients
+import com.piea.student.utils.BiometricAuthHelper
 import com.piea.student.utils.Resource
 import kotlinx.coroutines.launch
 
@@ -64,13 +70,31 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onNavigateToSignup: () -> Unit
 ) {
+    val context = LocalContext.current
+    val activity = context as? FragmentActivity
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var rememberMe by remember { mutableStateOf(false) }
 
     val loginState by viewModel.loginState.collectAsState()
+    val rememberedEmail by viewModel.rememberedEmail.collectAsState()
+    val rememberedPassword by viewModel.rememberedPassword.collectAsState()
+    val rememberMeChecked by viewModel.rememberMeChecked.collectAsState()
+    val biometricEnabled by viewModel.biometricEnabled.collectAsState()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
+    // Pre-fill saved credentials once loaded from DataStore
+    LaunchedEffect(rememberedEmail, rememberMeChecked) {
+        if (rememberMeChecked && rememberedEmail.isNotBlank()) {
+            email = rememberedEmail
+            password = rememberedPassword
+            rememberMe = true
+        }
+    }
 
     LaunchedEffect(loginState) {
         when (val state = loginState) {
@@ -85,6 +109,8 @@ fun LoginScreen(
             else -> Unit
         }
     }
+
+    val showBiometricButton = biometricEnabled && rememberMeChecked && rememberedEmail.isNotBlank() && activity != null
 
     Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
         Column(
@@ -155,14 +181,21 @@ fun LoginScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    Spacer(Modifier.height(4.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(top = 4.dp)
+                    ) {
+                        Checkbox(checked = rememberMe, onCheckedChange = { rememberMe = it })
+                        Text("Remember Me", fontSize = 13.sp, modifier = Modifier.padding(start = 2.dp))
+                    }
+
                     TextButton(onClick = { viewModel.sendPasswordReset(email) }, modifier = Modifier.align(Alignment.End)) {
                         Text("Forgot Password?")
                     }
 
                     Spacer(Modifier.height(8.dp))
                     Button(
-                        onClick = { viewModel.login(email, password) },
+                        onClick = { viewModel.login(email, password, rememberMe) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(54.dp),
@@ -175,6 +208,35 @@ fun LoginScreen(
                             CircularProgressIndicator(modifier = Modifier.height(22.dp), color = MaterialTheme.colorScheme.onPrimary)
                         } else {
                             Text("Login", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+
+                    if (showBiometricButton) {
+                        Spacer(Modifier.height(12.dp))
+                        OutlinedButton(
+                            onClick = {
+                                BiometricAuthHelper.showPrompt(
+                                    activity = activity!!,
+                                    onSuccess = { viewModel.loginWithSavedCredentials() },
+                                    onError = { message ->
+                                        scope.launch { snackbarHostState.showSnackbar(message) }
+                                    }
+                                )
+                            },
+                            modifier = Modifier.fillMaxWidth().height(54.dp),
+                            shape = RoundedCornerShape(14.dp)
+                        ) {
+                            Icon(Icons.Default.Fingerprint, contentDescription = null)
+                            Text("  Login with Fingerprint / Face", fontSize = 15.sp)
+                        }
+                    } else if (rememberMe && activity != null && BiometricAuthHelper.isBiometricAvailable(activity)) {
+                        Spacer(Modifier.height(6.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = biometricEnabled,
+                                onCheckedChange = { viewModel.setBiometricEnabled(it) }
+                            )
+                            Text("Enable Fingerprint/Face login next time", fontSize = 12.sp)
                         }
                     }
                 }
