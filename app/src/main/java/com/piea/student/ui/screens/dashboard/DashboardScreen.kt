@@ -66,8 +66,7 @@ private val allServices = listOf(
     DashboardAction("Scholarships", Icons.Default.CardMembership, Screen.Scholarships.route),
     DashboardAction("Upload Documents", Icons.Default.CloudUpload, Screen.DocumentUpload.route),
     DashboardAction("Office Location", Icons.Default.LocationOn, Screen.OfficeLocation.route),
-    DashboardAction("WhatsApp Support", Icons.Default.Chat, Screen.WhatsAppSupport.route)
-)
+    DashboardAction("Help & Support", Icons.Default.Chat, Screen.HelpSupport.route)
 
 @Composable
 fun DashboardScreen(
