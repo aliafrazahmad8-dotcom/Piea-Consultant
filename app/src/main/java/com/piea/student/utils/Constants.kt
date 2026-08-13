@@ -9,6 +9,7 @@ object Constants {
     const val COLLECTION_NOTIFICATIONS = "notifications"
     const val COLLECTION_APP_CONFIG = "app_config"
     const val APP_VERSION_DOC_ID = "version"
+    const val COLLECTION_SUPPORT_MESSAGES = "support_messages"
 
     const val STORAGE_DOCUMENTS = "student_documents"
     const val STORAGE_PROFILE_PHOTOS = "profile_photos"
@@ -33,6 +34,9 @@ object Constants {
     )
 
     const val WHATSAPP_NUMBER = "923154697566"
+    const val CONTACT_PHONE_NUMBER = "03154697566"
+    const val FACEBOOK_URL = "https://www.facebook.com/share/1HNGFdqhZt/"
+    const val INSTAGRAM_URL = "https://www.instagram.com/piea.consultant?igsh=b3B5ZWQ2emgycWhw"
 
     // Fee payment details (manual transfer until a real payment gateway
     // merchant account with JazzCash/EasyPaisa is approved and integrated)
