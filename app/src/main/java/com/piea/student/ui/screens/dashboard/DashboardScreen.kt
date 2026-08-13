@@ -67,6 +67,7 @@ private val allServices = listOf(
     DashboardAction("Upload Documents", Icons.Default.CloudUpload, Screen.DocumentUpload.route),
     DashboardAction("Office Location", Icons.Default.LocationOn, Screen.OfficeLocation.route),
     DashboardAction("Help & Support", Icons.Default.Chat, Screen.HelpSupport.route)
+)
 
 @Composable
 fun DashboardScreen(
